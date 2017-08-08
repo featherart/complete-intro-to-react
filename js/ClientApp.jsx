@@ -1,18 +1,23 @@
-const ce = React.createElement;
+// @flow
 
-const MyTitle = function(props) {
-  return ce('div', null, ce('h1', { style: { color: props.color } }, props.title));
-};
+import React from "react";
+import { render } from "react-dom";
 
-const MyFirstComponent = function() {
-  return ce(
-    'div',
-    { id: 'my-first-component' },
-    ce(MyTitle, { title: 'Game of Thrones', color: 'YellowGreen' }),
-    ce(MyTitle, { title: 'Stranger Things', color: 'GreenYellow' }),
-    ce(MyTitle, { title: 'Rick and Morty', color: 'LimeGreen' }),
-    ce(MyTitle, { title: 'Silicon Valley', color: 'peru' })
-  );
-};
 
-ReactDOM.render(ce(MyFirstComponent), document.getElementById('app'));
+import Perf from 'react-addons-perf';
+
+
+window.Perf = Perf;
+Perf.start();
+
+const renderApp = () => {
+  render(<App />, document.getElementById('app'));
+}
+renderApp()
+
+if (module.hot) {
+  module.hot.accept('./App', () => {
+    renderApp();
+  });
+}
+render(<App />, document.getElementById("app"));
